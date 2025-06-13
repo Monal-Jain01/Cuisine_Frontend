@@ -26,7 +26,7 @@ export const SavedContext = (props) => {
     // Try to save
     const alreadySaved = savedRecipes.some(r => r.idMeal === recipe.idMeal);
     if (!alreadySaved) {
-      const res = await fetch('http://localhost:5000/api/saved-recipes/', {
+      const res = await fetch(`${backendUrl}/api/saved-recipes/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -42,7 +42,7 @@ export const SavedContext = (props) => {
       }
     } else {
       // Try to unsave
-      const res = await fetch(`http://localhost:5000/api/saved-recipes/${recipe.idMeal}`, {
+      const res = await fetch(`${backendUrl}/api/saved-recipes/${recipe.idMeal}`, {
         method: 'DELETE',
         credentials: 'include',
       });
