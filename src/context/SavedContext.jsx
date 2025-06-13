@@ -4,12 +4,13 @@ import { toast } from 'react-toastify';
 export const SaveContext = createContext();
 
 export const SavedContext = (props) => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [savedRecipes, setSavedRecipes] = useState([]);
   console.log(savedRecipes)
 
   // Fetch saved recipes from backend (user is determined by backend auth)
   useEffect(() => {
-    fetch('http://localhost:5000/api/saved-recipes/', {
+    fetch(`${backendUrl}/api/saved-recipes/`, {
       credentials: 'include', // Send cookies/JWT for auth
     })
       .then(res => {
