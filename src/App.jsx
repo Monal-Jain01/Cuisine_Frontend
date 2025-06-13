@@ -16,7 +16,7 @@ function App() {
       <Navbar />
       <ToastContainer />
       <Routes>
-        <Route path="/Cuisine_Frontend/" element={<WebHome />} />
+        <Route path="/" element={<WebHome />} />
         <Route path="/content" element={<Content />} />
         <Route path="/login" element={<Login />} />
         <Route path="/saved-recipes" element={<SavedList />} />
