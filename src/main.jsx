@@ -7,7 +7,7 @@ import { AppContextProvider } from './context/AppContext.jsx'
 import { SavedContext } from './context/SavedContext.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
+  <BrowserRouter basename="/Cuisine_Frontend/">
   <AppContextProvider>
     <SavedContext>
       <App />
