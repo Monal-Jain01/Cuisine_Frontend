@@ -37,7 +37,7 @@ axios.defaults.withCredentials = true; // Ensure cookies are sent with requests
         const {data} = await axios.post(backendUrl + "/api/auth/login", {email, password}, {
           headers: {
             "Content-Type": "application/json",
-            "Allow-Control-Allow-Origin": "https://monal-jain01.github.io/Cuisine_Frontend/"
+            "Allow-Control-Allow-Origin": "https://monal-jain01.github.io"
 
           }
         })
