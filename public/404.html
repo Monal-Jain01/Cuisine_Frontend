@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Redirect</title>
+    <script>
+      const path = window.location.pathname.replace('/<frontend-repo>', '');
+      window.location.href = window.location.origin + '/<frontend-repo>' + path + window.location.search + window.location.hash;
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
