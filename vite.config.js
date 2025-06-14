@@ -8,5 +8,5 @@ export default defineConfig({
   tailwindcss(),
     react()
   ],
-  base:'/Cuisine_Frontend' 
+  base:'/Cuisine_Frontend/' 
 })
