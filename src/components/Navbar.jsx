@@ -6,7 +6,7 @@ import { useContext } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import chefClaudeIcon from '../assets/chef_claude_icon.png';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import fav_icon from '../assets/fav_icon.jpg'
 
 
 const Navbar = () => {
@@ -58,7 +58,7 @@ const Navbar = () => {
       <h1 className='text-2xl font-bold'>Cuisine Catalyst</h1>
       {userData?
         <div className='flex items-center gap-4'>
-          <button onClick={() => navigate('/saved-recipes')} className='py-2 px-4 bg-gradient-to-r from-blue-500 to-blue-900 rounded-full' ><FavoriteIcon /> Yum Picks </button>
+          <button onClick={() => navigate('/saved-recipes')} className='py-2 px-4 bg-gradient-to-r from-blue-500 to-blue-900 rounded-full' > <img src={fav_icon} alt="" />  Yum Picks </button>
       <div className='w-8 h-8 flex justify-center items-center rounded-full bg-black text-white relative group'>
         {userData.name[0].toUpperCase()}
         <div className='hidden absolute group-hover:block top-0 right-0 z-10 text-black rounded pt-10'>
