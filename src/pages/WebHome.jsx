@@ -12,7 +12,7 @@ export default function WebHome() {
   return (
     <div className='bg-gray-100' >
         {userData ? <div className=' px-8 pt-60'>
-          <h1  className='text-xl sm:text-3xl font-medium mb-2 '>Hey {userData.name} !</h1>
+          <h1  className='text-xl sm:text-3xl font-medium '>Hey {userData.name} !</h1>
         </div>: <div></div>
         }
         <div className='p-4 flex flex-col items-center justify-center h-screen bg-gray-100'>
