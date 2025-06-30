@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { AppContent } from '../context/AppContext'
 import axios from "axios"
 import {toast} from 'react-toastify'
+import { ThemeContext } from '../context/ThemeContextProvider';
 
 const Login = () => {
 
@@ -16,6 +17,8 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [name, setName] = useState("")
+
+  const {theme} = useContext(ThemeContext)
 
 axios.defaults.withCredentials = true; // Ensure cookies are sent with requests
   const onSubmitHandler = async (e) => {
@@ -37,7 +40,7 @@ axios.defaults.withCredentials = true; // Ensure cookies are sent with requests
         const {data} = await axios.post(backendUrl + "/api/auth/login", {email, password}, {
           headers: {
             "Content-Type": "application/json",
-            "Allow-Control-Allow-Origin": "https://monal-jain01.github.io"
+            "Allow-Control-Allow-Origin": "*"
 
           }
         })
@@ -63,7 +66,7 @@ axios.defaults.withCredentials = true; // Ensure cookies are sent with requests
   }
 
   return (
-    <div className='flex items-center justify-center min-h-screen px-6 sm:px-0 bg-gradient-to-br from-blue-200 to-blue-400'>
+    <div className={`flex items-center justify-center min-h-screen px-6 sm:px-0 ${theme}`}>
         <div className='bg-slate-900 p-10 rounded-lg shadow-lg w-full sm:w-96 text-blue-300 text-sm'>
           <h2 className='text-3xl font-semibold text-white text-center mb-3'>
             {state === "Sign Up" ? "Create account" : "Login"}

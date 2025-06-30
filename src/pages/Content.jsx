@@ -1,16 +1,16 @@
 import React , { useContext } from 'react'
-import Navbar from '../components/Navbar'
 import { toast } from 'react-toastify'
 import save from '../assets/save.png'
 import unsave from '../assets/unsave.jpg'
 import { SaveContext } from '../context/SavedContext'
 import { AppContent } from '../context/AppContext'
+import { ThemeContext } from '../context/ThemeContextProvider'
 
 export default function Content() {
   const [ingredient, setIngredient] = React.useState("")
   const [recipes, setRecipes] = React.useState([])
   const [selectedRecipe, setSelectedRecipe] = React.useState(null)
-  const {savedRecipes, handleSavedRecipeButton } = useContext(SaveContext)
+  const { handleSaveRecipe, isRecipeSaved, selectedId, setSelectedId, handleShowRecipe } = useContext(SaveContext)
   const {userData} = useContext(AppContent)
 
 
@@ -34,10 +34,14 @@ export default function Content() {
     } catch (err) {
       toast("Error fetching recipes.")
     }
+    setIngredient("")
   }
 
   // Fetch full recipe details (including instructions) by id
   async function handleShowRecipeInstructions(idMeal) {
+    handleShowRecipe(idMeal)
+  scrollTo(0,3000) 
+  
     const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
     try {
       const response = await fetch(url)
@@ -52,32 +56,7 @@ export default function Content() {
     }
   }
 
-  async function handleSaveRecipe(recipe) {
-    console.log(recipe.strInstructions)
-  // If recipe already has instructions, just save it
-  if (recipe.strInstructions) {
-    handleSavedRecipeButton(recipe);
-    return;
-  }
-  // Otherwise, fetch full details
-  try {
-    const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipe.idMeal}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    if (data.meals && data.meals[0]) {
-      handleSavedRecipeButton(data.meals[0]);
-    } else {
-      toast("Could not fetch recipe details for saving.");
-    }
-  } catch {
-    toast("Error fetching recipe details for saving.");
-  }
-}
-  // Check if a recipe is saved
-  function isRecipeSaved(recipe) {
-    return savedRecipes.some(r => r.idMeal === recipe.idMeal)
-  }
-
+  
   // Handle form submission to set ingredient and fetch recipes
   function handleSubmit(event) {
     event.preventDefault()
@@ -88,16 +67,17 @@ export default function Content() {
     setSelectedRecipe(null)
     getRecipesByIngredient()
   }
+  const {theme} = useContext(ThemeContext)
+  
 
   return (
-    <div>
-      <div className='shadow-md'>
-        <Navbar />
-      </div>
-      <main className='m-4 mt-40 '>
+    <>
+      <main className={` rounded-2xl border-0 pt-40 h-screen min-h-fit ${theme}`} >
+        <div className='w-[75%] text-center md:ml-20 ml-2 my-4 text-2xl font-semibold'>
+        Enter your Ingredient:</div>
         <form onSubmit={handleSubmit} className='flex justify-center gap-3 h-10'>
           <input
-            className='rounded-lg bg-slate-200 px-4 py-2 w-60 sm:w-80 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+            className='rounded-lg outline bg-gray-800 text-gray-100 px-4 py-2 w-[50%] sm:w-80 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
             type="text"
             placeholder='e.g. rice'
             aria-label='Add ingredient'
@@ -111,23 +91,23 @@ export default function Content() {
         </form>
 
         {recipes.length > 0 && (
-          <div className="mt-8 m-8">
+          <div className="mt-8 md:pl-20 m-8">
             <h2 className="text-2xl font-bold mb-4">Recipes:</h2>
             <ul className='list-disc'>
               {recipes.map((r, idx) => (
-                <li key={r.idMeal || idx} className="mb-2 flex items-center gap-4">
-                  <div className="text-gray-800 w-96">
+                <li key={r.idMeal || idx} className="mb-2 flex items-center md:gap-44">
+                  <div className="font-light w-96 text-xl ">
                     {r.strMeal}
                   </div>
-                  
+                  <div className='flex md:flex-row flex-col gap-1 mb-8 md:gap-16'>
                   <button
-                    className="ml-2 px-3 py-1 rounded bg-gradient-to-r from-blue-500 to-blue-900 text-white"
+                    className="cursor-pointer ml-2 px-3 py-1 rounded bg-gradient-to-r from-blue-500 to-blue-900 text-white md:p-2"
                     onClick={() => handleShowRecipeInstructions(r.idMeal)}
                   >
-                    Show Instructions
+                    {selectedId === r.idMeal ? "Hide Instructions" : "Show Instructions"}
                   </button>
                   {userData && <button
-                    className="ml-2 px-3 py-1 rounded w-28 bg-green-600 text-white hover:bg-green-700 flex items-center gap-2"
+                    className="cursor-pointer ml-2 px-3 py-1 md:p-2 rounded w-32 bg-green-600 text-white hover:bg-green-700 flex items-center gap-3"
                     onClick={() => handleSaveRecipe(r)}
                   >
                     <img
@@ -137,28 +117,30 @@ export default function Content() {
                     />
                     {isRecipeSaved(r) ? "Unsave" : "Save"}
                   </button>}
+                  </div>
                 </li>
               ))}
             </ul>
           </div>
         )}
 
-        {selectedRecipe && (
-          <div className="mt-8 p-4 bg-gray-100 rounded-lg">
+        {selectedId && selectedRecipe && (
+          <div className="mt-8 p-4 bg-black/80 text-white shadow-md shadow-black rounded-xl">
             <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold mb-2">{selectedRecipe.strMeal}</h3>
             <img
+                      onClick={() => handleSaveRecipe(selectedRecipe)}
                       src={isRecipeSaved(selectedRecipe) ? save : unsave}
                       alt={isRecipeSaved(selectedRecipe) ? "Saved" : "Save"}
-                      className='w-6 h-6'
+                      className='w-6 h-6 cursor-pointer'
                     />
                   </div>
-            <img src={selectedRecipe.strMealThumb} alt={selectedRecipe.strMeal} className="w-64 mb-4 rounded" />
+            <img src={selectedRecipe.strMealThumb} alt={selectedRecipe.strMeal} className="w-[40vw] h-[52vh] mb-4 rounded" />
             <h4 className="font-semibold mb-1">Instructions:</h4>
-            <p className="whitespace-pre-line">{selectedRecipe.strInstructions}</p>
+            <p className="whitespace-pre-line ">{selectedRecipe.strInstructions}</p>
           </div>
         )}
       </main>
-    </div>
+    </>
   )
 }

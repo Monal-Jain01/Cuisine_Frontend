@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { AppContent } from '../context/AppContext'
 import axios from "axios"
 import {toast} from 'react-toastify'
+import { ThemeContext } from '../context/ThemeContextProvider'
 
 function ResetPassword() {
 
@@ -12,6 +13,8 @@ function ResetPassword() {
   const {backendUrl} = useContext(AppContent)
   axios.defaults.withCredentials = true
 
+
+  const {theme} = useContext(ThemeContext)
   const [email, setEmail] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [isEmailSent, setIsEmailSent] = useState(false)
@@ -77,8 +80,8 @@ function ResetPassword() {
 
 
   return (
-    <div className='flex items-center justify-center min-h-screen px-6 sm:px-0 bg-gradient-to-br from-blue-200 to-purple-400'>
-      <img onClick={() => navigate("/")} src={assets.logo} alt="" className='absolute left-5 sm:left-20 top-5 w-28 sm:w-32 cursor-pointer' />
+    <div className={`flex items-center justify-center min-h-screen px-6 sm:px-0 bg-gradient-to-br from-blue-200 to-purple-400 ${theme}`}>
+      
 
     {!isEmailSent &&
 
