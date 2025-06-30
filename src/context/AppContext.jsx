@@ -67,7 +67,7 @@ export const AppContextProvider = (props) => {
             }
         } catch (error) {
             console.error("Error fetching user data:", error.message); // Debugging
-            toast.error("Failed to fetch user data. Please try again.");
+            console.log("Failed to fetch user data. Please try again.");
         }
     };
 
