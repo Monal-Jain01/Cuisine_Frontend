@@ -2,16 +2,13 @@ import React, { useState, useContext } from 'react'
 import { SaveContext } from '../context/SavedContext'
 import { ThemeContext } from '../context/ThemeContextProvider'
 import save from '../assets/save.png'
-import unsave from '../assets/unsave.jpg'
 
 export default function SavedList() {
   const { savedRecipes, handleSaveRecipe,isRecipeSaved, setSelectedId, selectedId, handleShowRecipe } = useContext(SaveContext)
 
   const {theme} = useContext(ThemeContext)
   
-    
-
-  return (
+   return (
     <div className={`${theme} h-screen min-h-fit`}>
       <h1 className='text-3xl font-bold text-center pt-10'>Saved Recipes</h1>
       <p className='text-center mt-4'>Here you can find all your saved recipes.</p>

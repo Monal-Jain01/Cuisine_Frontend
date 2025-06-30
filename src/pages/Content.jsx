@@ -1,7 +1,7 @@
 import React , { useContext } from 'react'
 import { toast } from 'react-toastify'
 import save from '../assets/save.png'
-import unsave from '../assets/unsave.jpg'
+import unsave from '../assets/unsave.png'
 import { SaveContext } from '../context/SavedContext'
 import { AppContent } from '../context/AppContext'
 import { ThemeContext } from '../context/ThemeContextProvider'

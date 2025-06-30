@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContextProvider';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { NavLink } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
