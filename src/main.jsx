@@ -8,15 +8,10 @@ import { AppContextProvider } from './context/AppContext.jsx'
 import { SavedContext } from './context/SavedContext.jsx'
 import ThemeContextProvider from './context/ThemeContextProvider.jsx'
 
-// Determine the router basename at runtime from a Vite env var so the app
-// can work on both GitHub Pages (e.g. "/Cuisine_Frontend/") and Vercel ("/").
-// Set VITE_BASENAME to "/" for Vercel builds (in Vercel project env vars),
-// or leave it unset to default to the GitHub Pages path.
-const basename = import.meta.env.VITE_BASENAME || '/Cuisine_Frontend'
-
+// Vite automatically sets BASE_URL to match the 'base' configured in vite.config.js
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter basename={basename}>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ThemeContextProvider>
         <AppContextProvider>
           <SavedContext>
