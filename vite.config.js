@@ -1,13 +1,18 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from "@tailwindcss/vite"
 
-// https://vite.dev/config/
+// Check if running on Vercel or custom environment variable
+const isVercel = process.env.VERCEL === '1' || process.env.DEPLOY_TARGET === 'vercel'
+
 export default defineConfig({
   plugins: [
-  tailwindcss(),
+    tailwindcss(),
     react()
   ],
-  base:'/Cuisine_Frontend/' ,
-  build: {chunkSizeWarningLimit: 1600,},
+  // Use '/' for Vercel, and '/Cuisine_Frontend/' for GitHub Pages
+  base: isVercel ? '/' : '/Cuisine_Frontend/',
+  build: {
+    chunkSizeWarningLimit: 1600,
+  },
 })
